@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 load_dotenv('../.env')
 
 import os
-from utils import gptunnel_call
+from rag.utils import gptunnel_call
 from langchain_core.language_models.llms import LLM
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
@@ -30,7 +30,7 @@ class GPTunnelLLM(LLM):
         return {"model_name": self.model}
 
 
-class RAG:
+class RAGPipeline:
     def __init__(self,
                  llm,
                  retriever
@@ -108,7 +108,7 @@ if __name__ == "__main__":
     gptunell_key = os.environ.get('GPTUNNEL_API_KEY')
     gptunnel_llm = GPTunnelLLM(api_key=gptunell_key)
 
-    assistant = RAG(llm=gptunnel_llm, retriever=retriever)
+    assistant = RAGPipeline(llm=gptunnel_llm, retriever=retriever)
 
     # Example query
     question = "How does ImageBind model bind multiple modalities into a single embedding space? Tell me in detail."
