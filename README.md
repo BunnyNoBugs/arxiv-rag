@@ -29,7 +29,6 @@ This project includes a Telegram bot that utilizes the RAG class to respond inte
 🛠 Setup and Configuration
 Ensure you have all required dependencies installed:
 
-bash
 ```
 pip install -r requirements.txt
 ```
@@ -47,7 +46,6 @@ The bot is configured to respond to /start and /help commands and handle free-te
 ▶️ Run the Bot
 Start the bot by running the following command:
 
-bash
 ```
 python bot.py
 ```
