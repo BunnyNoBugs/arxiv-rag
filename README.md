@@ -21,7 +21,7 @@ Utilizes a structured prompt template that dynamically integrates:
 
 **Validation**
 
-The validation of the RAG was conducted with LLM-as-judge method using Judging LLM: Mistral Large.
+The validation of the RAG was conducted with LLM-as-judge method using Mistral Large.
 The system gave:
 
 - Response vs reference answer: 0.89
