@@ -10,12 +10,9 @@ Retrieves relevant scientific articles to provide context for generating detaile
 Uses the GPTunnelLLM class, seamlessly integrated with the GPTunnel API, offering configurable model settings.
 
 💬 Conversation History
-Keeps track of past interactions to:
+Keeps track of past interactions to ensure coherent and contextually aware responses.
 
-- Ensure coherent and contextually aware responses.
-- Enhance conversational continuity over multiple exchanges.
-
-📜 Flexible Prompt Design
+📜 Prompt Design
 Utilizes a structured prompt template that dynamically integrates:
 
 - Context from retrieved documents.
@@ -24,7 +21,7 @@ Utilizes a structured prompt template that dynamically integrates:
 
 🚀 Deployment Instructions
 **Telegram Bot Integration**
-This project includes a Telegram bot that utilizes the RAG class to respond intelligently to user queries. Follow these steps to deploy and run the bot:
+This project includes a Telegram bot deployment for convenient interaction for users. Follow these steps to deploy and run the bot:
 
 🛠 Setup and Configuration
 Ensure you have all required dependencies installed:
@@ -47,6 +44,6 @@ The bot is configured to respond to /start and /help commands and handle free-te
 Start the bot by running the following command:
 
 ```
-python bot.py
+python app.py
 ```
 The bot will connect to Telegram and begin listening for messages.
