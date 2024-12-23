@@ -20,6 +20,7 @@ Utilizes a structured prompt template that dynamically integrates:
 - The current user question to tailor responses precisely.
 
 **Validation**
+
 The validation of the RAG was conducted with LLM-as-judge method using Judging LLM: Mistral Large.
 The system gave:
 
