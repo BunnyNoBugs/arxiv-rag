@@ -19,6 +19,14 @@ Utilizes a structured prompt template that dynamically integrates:
 - Conversation history for continuity.
 - The current user question to tailor responses precisely.
 
+**Validation**
+The validation of the RAG was conducted with LLM-as-judge method using Judging LLM: Mistral Large.
+The system gave:
+
+- Response vs reference answer: 0.89
+- Response vs input: 0.90
+
+
 🚀 Deployment Instructions
 **Telegram Bot Integration**
 This project includes a Telegram bot deployment for convenient interaction for users. Follow these steps to deploy and run the bot:
