@@ -62,24 +62,6 @@ class RAGPipeline:
     def retrieve_docs(self, question):
         return self.retriever.invoke(question)
 
-    def build_chain(self):
-        """Build the processing chain."""
-        return (
-                {
-                    "context": {
-                        "question": RunnablePassthrough()
-                                    | (lambda x: x["question"])
-                                    | self.retriever
-                                    | self.format_docs
-                    },
-                    "question": RunnablePassthrough(),
-                    "history": RunnablePassthrough(),
-                }
-                | self.prompt
-                | self.llm
-                | StrOutputParser()
-        )
-
     def build_llm_chain(self):
         return (
                 {
