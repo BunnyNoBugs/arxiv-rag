@@ -45,12 +45,12 @@ class RAGPipeline:
             """You are an assistant who answers scientific questions using data from an articles' database.
             This data will be given to you each time, and it is called context.
             Answer the user's question based only on this context provided.
-        
+
         Context: {context}
-        
+
         Conversation history (include recent exchanges):
         {history}
-        
+
         User's current question: {question}"""
         )
 
