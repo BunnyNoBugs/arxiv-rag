@@ -9,6 +9,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_community.retrievers import ArxivRetriever
+from langchain_mistralai import ChatMistralAI
 
 
 class GPTunnelLLM(LLM):
@@ -44,12 +45,12 @@ class RAGPipeline:
             """You are an assistant who answers scientific questions using data from an articles' database.
             This data will be given to you each time, and it is called context.
             Answer the user's question based only on this context provided.
-        
+
         Context: {context}
-        
+
         Conversation history (include recent exchanges):
         {history}
-        
+
         User's current question: {question}"""
         )
 
@@ -105,10 +106,14 @@ if __name__ == "__main__":
         doc_content_chars_max=10000000000
     )
 
-    gptunell_key = os.environ.get('GPTUNNEL_API_KEY')
-    gptunnel_llm = GPTunnelLLM(api_key=gptunell_key)
+    mistral_llm = ChatMistralAI(
+        model="mistral-large-latest",
+        temperature=0,
+        max_retries=2,
+        # other params...
+    )
 
-    assistant = RAGPipeline(llm=gptunnel_llm, retriever=retriever)
+    assistant = RAGPipeline(llm=mistral_llm, retriever=retriever)
 
     # Example query
     question = "How does ImageBind model bind multiple modalities into a single embedding space? Tell me in detail."

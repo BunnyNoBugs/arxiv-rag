@@ -13,10 +13,11 @@ from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandl
 
 from dotenv import load_dotenv
 
-from rag.rag import RAG, GPTunnelLLM
+from rag.rag_pipeline import RAGPipeline, GPTunnelLLM
 from langchain_community.retrievers import ArxivRetriever
+from langchain_mistralai import ChatMistralAI
 
-load_dotenv('../.env')
+load_dotenv('.env')
 
 # Enable logging
 logging.basicConfig(
@@ -56,10 +57,14 @@ async def rag_reply(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         doc_content_chars_max=10000000000
     )
 
-    gptunell_key = os.environ.get('GPTUNNEL_API_KEY')
-    gptunnel_llm = GPTunnelLLM(api_key=gptunell_key)
+    mistral_llm = ChatMistralAI(
+        model="mistral-large-latest",
+        temperature=0,
+        max_retries=2,
+        # other params...
+    )
 
-    assistant = RAG(llm=gptunnel_llm, retriever=retriever)
+    assistant = RAGPipeline(llm=mistral_llm, retriever=retriever)
 
     if update.message.text != '':
         user_input = update.message.text
