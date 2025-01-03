@@ -4,3 +4,4 @@ python-dotenv==1.0.1
 langchain-community==0.3.13
 arxiv==2.1.3
 langchain-mistralai==0.2.4
+
