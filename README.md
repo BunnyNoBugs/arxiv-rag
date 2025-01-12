@@ -43,7 +43,7 @@ Create a .env file. Example .env:
 
 ```
 TELEGRAM_BOT_TOKEN=your_telegram_bot_token
-GPTUNNEL_API_KEY=your_gptunnel_api_key
+MISTRAL_API_KEY=your_mistral_api_key
 ```
 
 Set Up the Bot
@@ -56,3 +56,13 @@ Start the bot by running the following command:
 python app.py
 ```
 The bot will connect to Telegram and begin listening for messages.
+
+▶️ Run bot using Docker app
+Build an image from root folder of the repo and run container with that image:
+
+example:
+```
+cd arxiv-rag/
+docker build -t arxiv-app .
+docker run -d --name arxiv-app-bot-app arxiv-rag-python-app
+```
