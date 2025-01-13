@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 
 load_dotenv('../.env')
 
+import os
 from typing import Union
 from rag.utils import gptunnel_call
 from langchain_core.language_models.llms import LLM
@@ -119,6 +120,12 @@ if __name__ == "__main__":
     )
 
     assistant = RAGPipeline(llm=mistral_llm, retriever=retriever)
+
+    # gptunnel example usage
+    # gptunnel_key = os.environ.get('GPTUNNEL_API_KEY')
+    # gptunnel_llm = GPTunnelLLM(api_key=gptunnel_key)
+    #
+    # assistant = RAGPipeline(llm=gptunnel_llm, retriever=retriever)
 
     # Example query
     question = "How does ImageBind model bind multiple modalities into a single embedding space? Tell me in detail."
