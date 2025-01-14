@@ -3,12 +3,14 @@ from dotenv import load_dotenv
 load_dotenv('../.env')
 
 import os
+from typing import Union
 from rag.utils import gptunnel_call
 from langchain_core.language_models.llms import LLM
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_community.retrievers import ArxivRetriever
+from langchain_mistralai import ChatMistralAI
 
 from langchain_mistralai import ChatMistralAI
 
@@ -60,42 +62,47 @@ class RAGPipeline:
         """Format retrieved documents for the LLM."""
         return "\n\n".join(doc.page_content for doc in docs)
 
-    def build_chain(self):
-        """Build the processing chain."""
+    # todo: make sure this func is necessary
+    def retrieve_docs(self, question):
+        return self.retriever.invoke(question)
+
+    def build_llm_chain(self):
         return (
                 {
-                    "context": {
-                        "question": RunnablePassthrough()
-                                    | (lambda x: x["question"])
-                                    | self.retriever
-                                    | self.format_docs
-                    },
-                    "question": RunnablePassthrough(),
-                    "history": RunnablePassthrough(),
+                    'context': (
+                            RunnablePassthrough()
+                            | (lambda x: x['docs'])
+                            | self.format_docs
+                    ),
+                    'question': RunnablePassthrough(),
+                    'history': RunnablePassthrough()
                 }
                 | self.prompt
                 | self.llm
                 | StrOutputParser()
         )
 
-    def handle_user_input(self, question: str) -> str:
+    def handle_user_input(self, question: str, return_retrieved_docs: bool = False) -> Union[str, dict]:
         """Handles user input and manages conversation history."""
         # Build the chain
-        chain = self.build_chain()
+        llm_chain = self.build_llm_chain()
 
         # Append the user's question to the history
         user_input = f"User: {question}"
         formatted_history = "\n".join(self.history)
 
-        # Invoke the chain and get the response
-        response = chain.invoke({"question": question, "history": formatted_history})
+        retrieved_docs = self.retrieve_docs(question)
+        response = llm_chain.invoke({"question": question, "docs": retrieved_docs, "history": formatted_history})
 
         # Append both user input and assistant response to history
         assistant_response = f"Assistant: {response}"
         self.history.append(user_input)
         self.history.append(assistant_response)
 
-        return response
+        if return_retrieved_docs:
+            return {'answer': response, 'retrieved_docs': [str(doc) for doc in retrieved_docs]}
+        else:
+            return response
 
 
 # Example Usage
@@ -115,6 +122,12 @@ if __name__ == "__main__":
     )
 
     assistant = RAGPipeline(llm=mistral_llm, retriever=retriever)
+
+    # gptunnel example usage
+    # gptunnel_key = os.environ.get('GPTUNNEL_API_KEY')
+    # gptunnel_llm = GPTunnelLLM(api_key=gptunnel_key)
+    #
+    # assistant = RAGPipeline(llm=gptunnel_llm, retriever=retriever)
 
     # Example query
     question = "How does ImageBind model bind multiple modalities into a single embedding space? Tell me in detail."
