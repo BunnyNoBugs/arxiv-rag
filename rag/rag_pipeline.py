@@ -12,6 +12,8 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_community.retrievers import ArxivRetriever
 from langchain_mistralai import ChatMistralAI
 
+from langchain_mistralai import ChatMistralAI
+
 
 class GPTunnelLLM(LLM):
     api_key: str
@@ -46,12 +48,12 @@ class RAGPipeline:
             """You are an assistant who answers scientific questions using data from an articles' database.
             This data will be given to you each time, and it is called context.
             Answer the user's question based only on this context provided.
-        
+
         Context: {context}
-        
+
         Conversation history (include recent exchanges):
         {history}
-        
+
         User's current question: {question}"""
         )
 

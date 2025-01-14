@@ -1,0 +1,11 @@
+version: '3.8'  # Specify the version of the Compose file format
+
+services:
+  python-app:
+    build:
+      context: .  # The context is the current directory (where your Dockerfile is located)
+      dockerfile: Dockerfile  # Optional: Specify the Dockerfile explicitly if it is named something else
+    container_name: arxiv-app  # Optional: The name of the running container
+    volumes:
+      - .:/app  # Mount the current directory to /app in the container (optional for development)
+    restart: unless-stopped  # Ensure the container restarts unless stopped manually
