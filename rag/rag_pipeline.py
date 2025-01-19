@@ -103,7 +103,7 @@ if __name__ == "__main__":
     # Initialize the retriever
     retriever = ArxivRetriever(
         top_k_results=3,
-        get_full_documents=True,  # gives errors with MuPDF when True
+        get_full_documents=True,
         doc_content_chars_max=10000000000
     )
 
