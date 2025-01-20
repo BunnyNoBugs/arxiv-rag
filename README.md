@@ -21,6 +21,44 @@ Utilizes a structured prompt template that dynamically integrates:
 - Conversation history for continuity
 - The current user question to tailor responses precisely
 
+## 🗺️ System Architecture
+
+The diagram below summarizes the system architecture:
+
+```mermaid
+---
+title: arXivRAG Architecture
+---
+flowchart LR
+    user_message("user message")
+    bot_message("bot message")
+    
+    subgraph Telegram Bot
+        bot[/bot/]
+        
+        subgraph rag[RAG Module]
+            direction TB
+            retriever[/ArxivRetriever/]
+            context
+            query(user question)
+            llm[/"LLM (Mistral API)"\]
+            answer(answer)
+            query --> retriever
+            query --> context
+        %%    todo: check the number of articles
+            retriever -- 3 articles --> context
+            context --> llm
+            llm --> answer
+        end
+    end 
+    
+    user_message --> bot
+    bot --query--> rag
+    rag --answer--> bot
+    bot ---> bot_message
+%%todo: add docker
+```
+
 ## ⚖️ Validation
 
 The validation of the RAG assistant was conducted with the LLM-as-judge method using Mistral Large.
