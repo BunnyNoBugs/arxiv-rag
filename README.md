@@ -65,11 +65,13 @@ flowchart LR
 
 ## ⚖️ Validation
 
-The validation of the RAG assistant was conducted with the LLM-as-judge method using Mistral Large.
+The [validation](https://github.com/BunnyNoBugs/arxiv-rag/blob/experiments/evaluation/rag_evaluation.ipynb) of the RAG assistant was conducted with the LLM-as-judge method using Mistral Large.
 The system gave:
 
 - Response vs reference answer: 0.89
 - Response vs input: 0.90
+- Response vs retrieved docs: 0.67
+- Response vs retrieved docs: 0.91
 
 ## 🚀 Deployment Instructions
 
