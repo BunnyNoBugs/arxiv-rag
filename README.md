@@ -43,12 +43,16 @@ flowchart LR
             query(user question)
             llm[/"LLM (Mistral API)"\]
             answer(answer)
+            history[[history]]
+            
             query --> retriever
             query --> context
         %%    todo: check the number of articles
-            retriever -- 3 articles --> context
+            retriever -- articles --> context
             context --> llm
             llm --> answer
+            answer --> history
+            history --> context
         end
     end 
     
